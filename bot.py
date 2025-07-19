@@ -96,3 +96,19 @@ if __name__ == "__main__":
 	print("Бот запущен... :)")
 	Thread(target=check_birthdays_and_send_messages, daemon=True).start()
 	bot.polling()
+
+
+
+import threading
+import http.server
+import socketserver
+
+def run_fake_server():
+    PORT = int(os.environ.get("PORT", 10000))
+    Handler = http.server.SimpleHTTPRequestHandler
+    with socketserver.TCPServer(("", PORT), Handler) as httpd:
+        print(f"Fake HTTP server running on port {PORT}")
+        httpd.serve_forever()
+
+# Запускаем HTTP-сервер в отдельном потоке
+threading.Thread(target=run_fake_server, daemon=True).start()
