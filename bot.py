@@ -78,7 +78,7 @@ def check_birthdays_and_send_messages():
 				bot.send_message(chat_id, f"🎉 Сегодня День рождения у {names}! Поздравляем! 🎂")
 
 		# Доброе утро + Котики
-		if now.hour == 20 and now.minute == 48: # Указываю время
+		if now.hour == 8 and now.minute == 00: # Указываю время
 			cat_image_url = get_random_cat()
 			for chat_id in chat_ids:
 					try:
