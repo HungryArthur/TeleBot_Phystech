@@ -13,6 +13,7 @@ TOKEN = os.getenv("TOKEN")  # Безопасное получение токен
 bot = telebot.TeleBot(TOKEN)
 TIMEZONE = pytz.timezone('Europe/Moscow') # Временная зона GMT+3(время по мск)
 chat_ids = set() # Множество для хранения ID чатов
+sent_birthdays = set()  # сюда будем записывать даты, по которым уже поздравили
 birthdays = {
 	"10.01": ["Михаил 🎂","Никита 🎂"],
 	"24.04": ["Никита 🥳", "Мария 🎂"],
@@ -77,6 +78,11 @@ def check_birthdays_and_send_messages():
 			names = ", ".join(birthdays[today_date])
 			for chat_id in chat_ids:
 				bot.send_message(chat_id, f"🎉 Сегодня День рождения у {names}! Поздравляем! 🎂")
+	        sent_birthdays.add(today_date)  # пометили, что поздравили
+
+        # Сбросить флаги на следующий день
+        if today_date not in sent_birthdays:
+            sent_birthdays.clear()
 
 		# Доброе утро + Котики
 		if now.hour == 8 and now.minute == 00: # Указываю время
@@ -97,4 +103,5 @@ if __name__ == "__main__":
 	print("Бот запущен... :)")
 	Thread(target=check_birthdays_and_send_messages, daemon=True).start()
 	bot.polling()
+
 
