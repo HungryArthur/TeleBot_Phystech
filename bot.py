@@ -69,12 +69,13 @@ def start(message):
 
 # Рассылка во врмея которое я укажу
 def check_birthdays_and_send_messages():
+    global sent_birthdays
 	while True:
 		now = datetime.now(TIMEZONE)
 		today_date = now.strftime("%d.%m")
 
 		# Проверка ДР
-		if today_date in birthdays:
+		if today_date in birthdays and today_date not in sent_birthdays:
 			names = ", ".join(birthdays[today_date])
 			for chat_id in chat_ids:
 				bot.send_message(chat_id, f"🎉 Сегодня День рождения у {names}! Поздравляем! 🎂")
@@ -103,5 +104,6 @@ if __name__ == "__main__":
 	print("Бот запущен... :)")
 	Thread(target=check_birthdays_and_send_messages, daemon=True).start()
 	bot.polling()
+
 
 
