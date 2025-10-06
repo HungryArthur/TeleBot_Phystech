@@ -134,7 +134,7 @@ def check_birthdays_and_send_messages():
                 morning_sent_today = True
                 time.sleep(60)
 
-            # Вечерняя рассылка (20:00) - ТОЛЬКО КОТИКИ
+            # Вечерняя рассылка (20:00)
             elif now.hour == 20 and now.minute == 0 and not evening_sent_today:
                 print("Время вечерней рассылки!")
                 cat_image_url = get_random_cat()
@@ -175,3 +175,4 @@ def start_bot():
 
 if __name__ == "__main__":
     start_bot()
+
